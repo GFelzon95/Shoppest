@@ -1,0 +1,23 @@
+﻿@model ShoppestWeb.ViewModels.ProductCategoryIndex;
+
+
+<div class="container">
+    <div class="col-6">
+        <h2 class="text-primary">Product Category List</h2>
+    </div>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var category in Model.ProductCategories)
+        {
+            <tr>
+                <td>@category.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
