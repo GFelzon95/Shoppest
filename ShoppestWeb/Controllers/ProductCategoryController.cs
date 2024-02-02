@@ -61,5 +61,114 @@ namespace ShoppestWeb.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult Edit(int? id)
+        {
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryInDb = _context.ProductCategories.SingleOrDefault(c => c.Id == id);
+
+            var viewModel = new ProductCategoryForm()
+            {
+                Id = categoryInDb.Id,
+                Name = categoryInDb.Name,
+                FormSettings = new FormSettings()
+                {
+                    Title = "Edit Category",
+                    ButtonStr = "Update"
+                }
+            };
+            return View("CategoryForm", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductCategoryForm form)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ProductCategoryForm()
+                {
+                    Id = form.Id,
+                    Name = form.Name,
+                    FormSettings = new FormSettings()
+                    {
+                        Title = "Edit Category",
+                        ButtonStr = "Update"
+                    }
+                };
+
+                return View("CategoryForm", viewModel);
+            }
+
+            var category = new ProductCategory()
+            {
+                Id = form.Id,
+                Name = form.Name
+            };
+
+            _context.ProductCategories.Update(category);
+            _context.SaveChanges();
+            TempData["success"] = "Category successfully updated.";
+            return RedirectToAction("Index");
+
+        }
+        public IActionResult Delete(int? id)
+        {
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryInDb = _context.ProductCategories.SingleOrDefault(c => c.Id == id);
+
+            var viewModel = new ProductCategoryForm()
+            {
+                Id = categoryInDb.Id,
+                Name = categoryInDb.Name,
+                FormSettings = new FormSettings()
+                {
+                    Title = "Delete Category",
+                    ButtonStr = "Delete"
+                }
+            };
+            return View("CategoryForm", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ProductCategoryForm form)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ProductCategoryForm()
+                {
+                    Id = form.Id,
+                    Name = form.Name,
+                    FormSettings = new FormSettings()
+                    {
+                        Title = "Delete Category",
+                        ButtonStr = "Delete"
+                    }
+                };
+
+                return View("CategoryForm", viewModel);
+            }
+
+            var category = new ProductCategory()
+            {
+                Id = form.Id,
+                Name = form.Name
+            };
+
+            _context.ProductCategories.Remove(category);
+            _context.SaveChanges();
+            TempData["success"] = "Category successfully deleted.";
+            return RedirectToAction("Index");
+
+        }
     }
 }
