@@ -22,7 +22,7 @@ namespace ShoppestWeb.Controllers
         {
             var viewModel = new ProductCategoryForm()
             {
-                ProductCategory = new ProductCategory() { Id = 0 },
+                Id = 0,
                 FormSettings = new FormSettings()
                 {
                     Title = "Create Category",
@@ -32,6 +32,34 @@ namespace ShoppestWeb.Controllers
             return View("CategoryForm", viewModel);
         }
 
+        [HttpPost]
+        public IActionResult Create(ProductCategoryForm form)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ProductCategoryForm()
+                {
+                    Id = form.Id,
+                    Name = form.Name,
+                    FormSettings = new FormSettings()
+                    {
+                        Title = "Create Category",
+                        ButtonStr = "Create"
+                    }
+                };
 
+                return View("CategoryForm", viewModel);
+            }
+
+            var category = new ProductCategory()
+            {
+                Name = form.Name,
+            };
+            _context.ProductCategories.Add(category);
+            _context.SaveChanges();
+            TempData["success"] = "Category successfully created.";
+            return RedirectToAction("Index");
+
+        }
     }
 }

@@ -4,8 +4,8 @@ namespace ShoppestWeb.ViewModels
 {
     public class ProductCategoryForm
     {
-        public ProductCategory ProductCategory { get; set; }
-
-        public FormSettings FormSettings { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public FormSettings? FormSettings { get; set; }
     }
 }
