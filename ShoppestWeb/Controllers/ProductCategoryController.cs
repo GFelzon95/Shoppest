@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoppestWeb.Data;
+using ShoppestWeb.Models;
 using ShoppestWeb.ViewModels;
 
 namespace ShoppestWeb.Controllers
@@ -16,5 +17,21 @@ namespace ShoppestWeb.Controllers
             var viewModel = new ProductCategoryIndex() { ProductCategories = _context.ProductCategories.ToList() };
             return View(viewModel);
         }
+
+        public IActionResult Create()
+        {
+            var viewModel = new ProductCategoryForm()
+            {
+                ProductCategory = new ProductCategory() { Id = 0 },
+                FormSettings = new FormSettings()
+                {
+                    Title = "Create Category",
+                    ButtonStr = "Create"
+                }
+            };
+            return View("CategoryForm", viewModel);
+        }
+
+
     }
 }

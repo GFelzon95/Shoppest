@@ -1,0 +1,25 @@
+﻿@model ShoppestWeb.ViewModels.ProductCategoryForm;
+
+<form method="post">
+    <input asp-for="ProductCategory.Id" hidden />
+    <div class="border p-3">
+        <div class="row mb-1 p-2">
+            <h2 class="text-bg-danger-primary">@Model.FormSettings.Title</h2>
+            <hr />
+        </div>
+    
+        <div class="mb-3 row p-1">
+            <label asp-for="ProductCategory.Name" class="p-0"></label>
+            <input asp-for="ProductCategory.Name" class="form-control" />
+        </div>
+
+        <div class="row p-1">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">@Model.FormSettings.ButtonStr</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="ProductCategory" asp-action="Index" class="btn btn-secondary border form-control">Back To List</a>
+            </div>
+        </div>
+    </div>
+</form>
