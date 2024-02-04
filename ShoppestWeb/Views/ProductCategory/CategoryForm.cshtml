@@ -10,8 +10,16 @@
     
         <div class="mb-3 row p-1">
             <label asp-for="Name" class="p-0"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+            @if (Model.IsDelete == false)
+            {
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+
+            }
+            @if (Model.IsDelete == true)
+            {
+                <input asp-for="Name" class="form-control" disabled/>
+            }
         </div>
 
         <div class="row p-1">
@@ -19,7 +27,7 @@
                 <button type="submit" class="btn btn-primary form-control">@Model.FormSettings.ButtonStr</button>
             </div>
             <div class="col-6 col-md-3">
-                <a asp-controller="ProductCategory" asp-action="Index" class="btn btn-secondary border form-control">Back To List</a>
+                    <a asp-controller="ProductCategory" asp-action="Index" class="btn btn-secondary border form-control">Back To List</a>
             </div>
         </div>
     </div>

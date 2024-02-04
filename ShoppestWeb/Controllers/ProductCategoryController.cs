@@ -23,12 +23,10 @@ namespace ShoppestWeb.Controllers
             var viewModel = new ProductCategoryForm()
             {
                 Id = 0,
-                FormSettings = new FormSettings()
-                {
-                    Title = "Create Category",
-                    ButtonStr = "Create"
-                }
+                FormSettings = new FormSettings(FormSettings.Option.Create),
+                IsDelete = false
             };
+
             return View("CategoryForm", viewModel);
         }
 
@@ -41,11 +39,8 @@ namespace ShoppestWeb.Controllers
                 {
                     Id = form.Id,
                     Name = form.Name,
-                    FormSettings = new FormSettings()
-                    {
-                        Title = "Create Category",
-                        ButtonStr = "Create"
-                    }
+                    FormSettings = new FormSettings(FormSettings.Option.Create),
+                    IsDelete = false
                 };
 
                 return View("CategoryForm", viewModel);
@@ -72,15 +67,17 @@ namespace ShoppestWeb.Controllers
 
             var categoryInDb = _context.ProductCategories.SingleOrDefault(c => c.Id == id);
 
+            if (categoryInDb == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = new ProductCategoryForm()
             {
                 Id = categoryInDb.Id,
                 Name = categoryInDb.Name,
-                FormSettings = new FormSettings()
-                {
-                    Title = "Edit Category",
-                    ButtonStr = "Update"
-                }
+                FormSettings = new FormSettings(FormSettings.Option.Edit),
+                IsDelete = false
             };
             return View("CategoryForm", viewModel);
         }
@@ -94,11 +91,8 @@ namespace ShoppestWeb.Controllers
                 {
                     Id = form.Id,
                     Name = form.Name,
-                    FormSettings = new FormSettings()
-                    {
-                        Title = "Edit Category",
-                        ButtonStr = "Update"
-                    }
+                    FormSettings = new FormSettings(FormSettings.Option.Edit),
+                    IsDelete = false
                 };
 
                 return View("CategoryForm", viewModel);
@@ -126,15 +120,17 @@ namespace ShoppestWeb.Controllers
 
             var categoryInDb = _context.ProductCategories.SingleOrDefault(c => c.Id == id);
 
+            if (categoryInDb == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = new ProductCategoryForm()
             {
                 Id = categoryInDb.Id,
                 Name = categoryInDb.Name,
-                FormSettings = new FormSettings()
-                {
-                    Title = "Delete Category",
-                    ButtonStr = "Delete"
-                }
+                FormSettings = new FormSettings(FormSettings.Option.Delete),
+                IsDelete = true
             };
             return View("CategoryForm", viewModel);
         }
@@ -142,33 +138,17 @@ namespace ShoppestWeb.Controllers
         [HttpPost]
         public IActionResult Delete(ProductCategoryForm form)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new ProductCategoryForm()
-                {
-                    Id = form.Id,
-                    Name = form.Name,
-                    FormSettings = new FormSettings()
-                    {
-                        Title = "Delete Category",
-                        ButtonStr = "Delete"
-                    }
-                };
+            var category = _context.ProductCategories.SingleOrDefault(c => c.Id == form.Id);
 
-                return View("CategoryForm", viewModel);
+            if (category == null)
+            {
+                return NotFound();
             }
-
-            var category = new ProductCategory()
-            {
-                Id = form.Id,
-                Name = form.Name
-            };
 
             _context.ProductCategories.Remove(category);
             _context.SaveChanges();
             TempData["success"] = "Category successfully deleted.";
             return RedirectToAction("Index");
-
         }
     }
 }
