@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ShoppestWeb.Migrations
+namespace Shoppest.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddProductCategoryTableToDb : Migration

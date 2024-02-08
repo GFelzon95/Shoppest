@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ShoppestWeb.Data;
+using Shoppest.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 

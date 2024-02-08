@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoppestWeb.Data;
-using ShoppestWeb.Models;
-using ShoppestWeb.ViewModels;
+using Shoppest.DataAccess;
+using Shoppest.Models;
+using Shoppest.Models.ViewModels;
 
-namespace ShoppestWeb.Controllers
+namespace Shoppest.Controllers
 {
     public class ProductCategoryController : Controller
     {

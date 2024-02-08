@@ -1,6 +1,4 @@
-﻿using ShoppestWeb.Models;
-
-namespace ShoppestWeb.ViewModels
+﻿namespace Shoppest.Models.ViewModels
 {
     public class ProductCategoryIndex
     {

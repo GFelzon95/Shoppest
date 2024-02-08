@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using ShoppestWeb.Models;
+using Shoppest.Models;
 using System.Diagnostics;
 
-namespace ShoppestWeb.Controllers
+namespace Shoppest.Controllers
 {
     public class HomeController : Controller
     {

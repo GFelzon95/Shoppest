@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShoppestWeb.Models;
+using Shoppest.Models;
 
-namespace ShoppestWeb.Data
+namespace Shoppest.DataAccess
 {
     public class ApplicationDbContext : DbContext
     {
