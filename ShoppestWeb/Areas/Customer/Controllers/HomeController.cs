@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Shoppest.Models;
 using System.Diagnostics;
 
-namespace Shoppest.Controllers
+namespace Shoppest.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

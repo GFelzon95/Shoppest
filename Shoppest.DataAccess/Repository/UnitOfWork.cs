@@ -2,14 +2,14 @@
 
 namespace Shoppest.DataAccess.Repository
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        public IProductCategoryRepository ProductCategory { get; private set; }
+        public IProductCategoryRepository ProductCategories { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            ProductCategory = new ProductCategoryRepository(_context);
+            ProductCategories = new ProductCategoryRepository(_context);
 
         }
 
