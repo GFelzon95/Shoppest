@@ -16,17 +16,17 @@
             switch (option)
             {
                 case Option.Create:
-                    this.Title = "Create Category";
+                    this.Title = "Create";
                     this.ButtonStr = "Create";
                     break;
 
                 case Option.Edit:
-                    this.Title = "Edit Category";
+                    this.Title = "Edit";
                     this.ButtonStr = "Update";
                     break;
 
                 case Option.Delete:
-                    this.Title = "Delete Category";
+                    this.Title = "Delete";
                     this.ButtonStr = "Delete";
                     break;
 
