@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        IProductCategoryRepository ProductCategory { get; }
+        IProductCategoryRepository ProductCategories { get; }
 
         void Save();
     }
