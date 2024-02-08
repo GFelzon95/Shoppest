@@ -6,10 +6,12 @@ namespace Shoppest.DataAccess.Repository
     {
         private readonly ApplicationDbContext _context;
         public IProductCategoryRepository ProductCategories { get; private set; }
+        public IProductRepository Products { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             ProductCategories = new ProductCategoryRepository(_context);
+            Products = new ProductRepository(_context);
 
         }
 
