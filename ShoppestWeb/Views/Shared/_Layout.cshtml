@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ShoppestWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShoppestWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons-1.11.3/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/lib/CodeSeven-toastr-50092cc/build/toastr.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -25,10 +25,21 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="ProductCategory" asp-action="Index" >Categories</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle contentManagement" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Content Management
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="ProductCategory" asp-action="Index">Categories</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

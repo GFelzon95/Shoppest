@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameWorkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+
 </Project>
