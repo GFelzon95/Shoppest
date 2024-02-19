@@ -15,17 +15,17 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var viewModel = new ProductCategoryIndex() { ProductCategories = _unitOfWork.ProductCategories.GetAll() };
+            var viewModel = new ProductCategoryIndexVM() { ProductCategories = _unitOfWork.ProductCategories.GetAll() };
             return View(viewModel);
         }
 
         public IActionResult Upsert(int? id)
         {
-            ProductCategoryForm viewModel;
+            ProductCategoryFormVM viewModel;
 
             if (id == null || id == 0)
             {
-                viewModel = new ProductCategoryForm()
+                viewModel = new ProductCategoryFormVM()
                 {
                     FormSettings = new FormSettings(FormSettings.Option.Create),
                     IsDelete = false
@@ -40,7 +40,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                viewModel = new ProductCategoryForm()
+                viewModel = new ProductCategoryFormVM()
                 {
                     Id = categoryInDb.Id,
                     Name = categoryInDb.Name,
@@ -53,11 +53,11 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductCategoryForm form)
+        public IActionResult Upsert(ProductCategoryFormVM form)
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new ProductCategoryForm()
+                var viewModel = new ProductCategoryFormVM()
                 {
                     Id = form.Id,
                     Name = form.Name,
@@ -109,7 +109,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var viewModel = new ProductCategoryForm()
+            var viewModel = new ProductCategoryFormVM()
             {
                 Id = categoryInDb.Id,
                 Name = categoryInDb.Name,
@@ -120,7 +120,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(ProductCategoryForm form)
+        public IActionResult Delete(ProductCategoryFormVM form)
         {
             var category = _unitOfWork.ProductCategories.Get(c => c.Id == form.Id);
 

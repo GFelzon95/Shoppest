@@ -2,7 +2,7 @@
 
 namespace Shoppest.Models.ViewModels
 {
-    public class ProductCategoryForm
+    public class ProductCategoryFormVM
     {
         public int Id { get; set; }
         [Required]

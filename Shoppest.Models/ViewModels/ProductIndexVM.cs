@@ -1,6 +1,6 @@
 ﻿namespace Shoppest.Models.ViewModels
 {
-    public class ProductIndex
+    public class ProductIndexVM
     {
         public IEnumerable<Product> Products { get; set; }
     }

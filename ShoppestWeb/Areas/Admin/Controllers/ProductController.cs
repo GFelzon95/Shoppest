@@ -14,9 +14,9 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var viewModel = new ProductIndex()
+            var viewModel = new ProductIndexVM()
             {
-                Products = _unitOfWork.Products.GetAll(Properties: "ProductCategory")
+                Products = _unitOfWork.Products.GetAll(includeProperties: "ProductCategory")
             };
 
             return View(viewModel);

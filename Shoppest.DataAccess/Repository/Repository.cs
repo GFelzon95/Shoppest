@@ -18,12 +18,12 @@ namespace Shoppest.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? Properties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (!string.IsNullOrEmpty(Properties))
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var property in Properties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(property);
                 }
@@ -32,12 +32,12 @@ namespace Shoppest.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? Properties = null)
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (!string.IsNullOrEmpty(Properties))
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var property in Properties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(property);
                 }
