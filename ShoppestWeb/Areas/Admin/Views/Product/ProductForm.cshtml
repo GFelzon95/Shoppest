@@ -1,0 +1,76 @@
+﻿@model ProductFormVM
+
+<div class="card shadow border-0 my-3">
+    <div class="card-header bg-primary">
+        <div class="row">
+            <div class="col-12 text-center text-light">
+                <h2>@(Model.Product.Id == 0 ? "Create" : "Edit") Product</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <input asp-for="Product.Id" hidden />
+            <div class="m-2">
+                <div class=" mb-3 row p-1">
+                    <div class="form-floating py-3 col-12">
+                        <input asp-for="Product.Name" class="form-control border-0 shadow" />
+                        <label asp-for="Product.Name" class="ms-2 text-black-50"></label>
+                        <span asp-validation-for="Product.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-3 col-12">
+                        <textarea asp-for="Product.Description" class="form-control border-0 shadow" ></textarea>
+                        <label asp-for="Product.Description" class="ms-2 text-black-50"></label>
+                    </div>
+                    <div class="form-floating py-3 col-12">
+                        <input asp-for="Product.Price" class="form-control border-0 shadow" />
+                        <label asp-for="Product.Price" class="ms-2 text-black-50"></label>
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-3 col-12">
+                        <input asp-for="Product.Quantity" class="form-control border-0 shadow" />
+                        <label asp-for="Product.Quantity" class="ms-2 text-black-50"></label>
+                        <span asp-validation-for="Product.Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-3 col-12">
+                        <select asp-for="Product.ProductCategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow" >
+                            <option disabled selected>--Select Category--</option>
+                        </select>
+                        <label asp-for="Product.ProductCategoryId" class="ms-2 text-black-50">Product Category</label>
+                    </div>
+                    <div class="form-floating py-3 col-12">
+                        <input asp-for="Product.PictureUrl" class="form-control border-0 shadow" />
+                        <label asp-for="Product.PictureUrl" class="ms-2 text-black-50"></label>
+                        <span asp-validation-for="Product.PictureUrl" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row p-1">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">@(Model.Product.Id == 0 ? "Create" : "Update")</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary border form-control">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+            <script>
+                tinymce.init({
+                    selector: 'textarea',
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | checklist numlist indent outdent | emoticons charmap ',
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Author name',
+                    mergetags_list: [
+                        { value: 'First.Name', title: 'First Name' },
+                        { value: 'Email', title: 'Email' },
+                    ],
+                    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+                });
+            </script>
+        }
+    </div>
+
