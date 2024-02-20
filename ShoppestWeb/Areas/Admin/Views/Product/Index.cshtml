@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
+        <table id="productTbl" class="table table-bordered table-striped" style="width: 100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var product in Model.Products)
+                @* @foreach(var product in Model.Products)
                 {
                     <tr>
                         <td>@product.Name</td>
@@ -43,36 +43,12 @@
                             </div>
                         </td>
                     </tr>
-                }
+                } *@
             </tbody>
         </table>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        function Delete(url) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: url,
-                        type: "DELETE",
-                        success: function (data) {
-                            // dataTable.ajax.reload();
-                            location.reload();
-                            toastr.success(data.message);
-                        }
-                    })
-                }
-            });
-        }
-    </script>
+    <script src="~/js/product.js"></script>
 }

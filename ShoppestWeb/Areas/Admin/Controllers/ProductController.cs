@@ -80,6 +80,13 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
 
         #region APICALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Products.GetAll(includeProperties: "ProductCategory");
+            return Json(new { data = productList });
+        }
+
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
