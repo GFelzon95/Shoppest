@@ -16,8 +16,8 @@ function loadDataTable() {
                 data: 'id',
                 "render": function (data) {
                     return `<div class="w-100 btn-group px-3" role="group">
-                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary ms-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                                <a onClick="Delete('/admin/product/delete?id=@product.Id')" class="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i> Delete</a>
+                                <a href='/admin/product/upsert/${data}' class="btn btn-primary ms-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <a onClick="Delete('/admin/product/delete?id=${data}')" class="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i> Delete</a>
                             </div>`;
                 },
                 width: '35%'
@@ -43,8 +43,8 @@ function Delete(url) {
                 url: url,
                 type: "DELETE",
                 success: function (data) {
-                    dataTable.ajax.reload();
                     toastr.success(data.message);
+                    dataTable.ajax.reload();
                 }
             })
         }

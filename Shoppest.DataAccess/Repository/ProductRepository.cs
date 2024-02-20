@@ -12,7 +12,19 @@ namespace Shoppest.DataAccess.Repository
         }
         public void Update(Product product)
         {
-            _context.Update(product);
+            var productFromDb = _context.Products.FirstOrDefault(p => p.Id == product.Id);
+            if (productFromDb != null)
+            {
+                productFromDb.Name = product.Name;
+                productFromDb.Description = product.Description;
+                productFromDb.Price = product.Price;
+                productFromDb.ProductCategoryId = product.ProductCategoryId;
+                productFromDb.Quantity = product.Quantity;
+                if (product.PictureUrl != null)
+                {
+                    productFromDb.PictureUrl = product.PictureUrl;
+                }
+            }
         }
     }
 }

@@ -10,10 +10,13 @@ namespace ShoppestWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
+
         public IActionResult Index()
         {
             var viewModel = new ProductIndexVM()
@@ -51,7 +54,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductFormVM productForm)
+        public IActionResult Upsert(ProductFormVM productForm, IFormFile? file)
         {
             if (!ModelState.IsValid)
             {
@@ -62,6 +65,31 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                 });
 
                 return View("ProductForm", productForm);
+            }
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string productPath = Path.Combine(wwwRootPath, @"pictures\product");
+
+                if (!string.IsNullOrEmpty(productForm.Product.PictureUrl))
+                {
+                    //delete old picture
+                    var oldPicturePath = Path.Combine(wwwRootPath, productForm.Product.PictureUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldPicturePath))
+                    {
+                        System.IO.File.Delete(oldPicturePath);
+                    }
+                }
+
+                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                productForm.Product.PictureUrl = @"\pictures\product\" + fileName;
             }
 
             var productId = productForm.Product.Id;
