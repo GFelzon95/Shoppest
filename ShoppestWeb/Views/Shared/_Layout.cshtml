@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/SweetAlert/css/sweetalert2.css" />
     <link rel="stylesheet" href="~/lib/DataTables-1.13.7/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -41,9 +42,11 @@
                                 <li class="nav-item">
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
                                 </li>
+
                             </ul>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial.cshtml"></partial>
                 </div>
             </div>
         </nav>
