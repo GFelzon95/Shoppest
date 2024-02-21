@@ -28,9 +28,14 @@ namespace Shoppest.Areas.Customer.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Details()
+        public IActionResult Details(int? id)
         {
-            throw new NotImplementedException();
+            var viewModel = new HomeDetailsVM()
+            {
+                Product = _unitOfWork.Products.Get(p => p.Id == id, includeProperties: "ProductCategory")
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

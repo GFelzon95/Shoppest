@@ -1,6 +1,8 @@
 ﻿namespace Shoppest.Models.ViewModels.HomeVM
 {
-    internal class HomeDetailsVM
+    public class HomeDetailsVM
     {
+        public Product Product { get; set; }
+        public int Count { get; set; }
     }
 }
