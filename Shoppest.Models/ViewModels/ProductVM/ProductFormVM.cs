@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Shoppest.Models.ViewModels
+namespace Shoppest.Models.ViewModels.ProductVM
 {
     public class ProductFormVM
     {

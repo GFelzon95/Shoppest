@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shoppest.Models.ViewModels
+namespace Shoppest.Models.ViewModels.ProductCategoryVM
 {
     public class ProductCategoryFormVM
     {

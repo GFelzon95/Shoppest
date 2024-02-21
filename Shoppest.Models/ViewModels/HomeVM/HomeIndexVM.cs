@@ -1,4 +1,4 @@
-﻿namespace Shoppest.Models.ViewModels
+﻿namespace Shoppest.Models.ViewModels.HomeVM
 {
     public class HomeIndexVM
     {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
-using Shoppest.Models.ViewModels;
+using Shoppest.Models.ViewModels.HomeVM;
 using System.Diagnostics;
 
 namespace Shoppest.Areas.Customer.Controllers
@@ -26,6 +26,11 @@ namespace Shoppest.Areas.Customer.Controllers
                 Products = _unitOfWork.Products.GetAll()
             };
             return View(viewModel);
+        }
+
+        public IActionResult Details()
+        {
+            throw new NotImplementedException();
         }
 
         public IActionResult Privacy()

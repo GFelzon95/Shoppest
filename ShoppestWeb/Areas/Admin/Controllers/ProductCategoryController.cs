@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
-using Shoppest.Models.ViewModels;
+using Shoppest.Models.ViewModels.ProductCategoryVM;
 
 namespace ShoppestWeb.Areas.Admin.Controllers
 {
