@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shoppest.DataAccess\Shoppest.DataAccess.csproj" />
+    <ProjectReference Include="..\Shoppest.Utility\Shoppest.Utility.csproj" />
   </ItemGroup>
 
 </Project>
