@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
 using Shoppest.Models.ViewModels.ProductCategoryVM;
+using Shoppest.Utility;
 
 namespace ShoppestWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
