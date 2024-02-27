@@ -12,7 +12,8 @@ namespace Shoppest.Models
         public string? Barangay { get; set; }
         public string? Province { get; set; }
         public string? Region { get; set; }
-        public int? PostalCode { get; set; }
+        [MaxLength(5)]
+        public string? PostalCode { get; set; }
 
     }
 }

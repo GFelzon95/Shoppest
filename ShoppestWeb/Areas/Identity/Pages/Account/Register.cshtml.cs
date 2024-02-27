@@ -97,7 +97,15 @@ namespace ShoppestWeb.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
+            public string Name { get; set; }
             public string? Role { get; set; }
+            public string? StreetAddress { get; set; }
+            public string? Barangay { get; set; }
+            public string? Province { get; set; }
+            public string? Region { get; set; }
+            [MaxLength(5)]
+            public string? PostalCode { get; set; }
 
             public IEnumerable<SelectListItem> RoleList { get; set; }
         }
@@ -135,6 +143,12 @@ namespace ShoppestWeb.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                user.Name = Input.Name;
+                user.StreetAddress = Input.StreetAddress;
+                user.Barangay = Input.Barangay;
+                user.Province = Input.Province;
+                user.Region = Input.Region;
+                user.PostalCode = Input.PostalCode;
 
                 if (result.Succeeded)
                 {
