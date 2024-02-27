@@ -5,6 +5,7 @@
         IProductCategoryRepository ProductCategories { get; }
         IProductRepository Products { get; }
         IShoppingCartRepository ShoppingCarts { get; }
+        IApplicationUserRepository ApplicationUsers { get; }
 
         void Save();
     }

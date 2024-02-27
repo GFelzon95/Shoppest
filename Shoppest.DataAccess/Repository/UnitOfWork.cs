@@ -8,12 +8,14 @@ namespace Shoppest.DataAccess.Repository
         public IProductCategoryRepository ProductCategories { get; private set; }
         public IProductRepository Products { get; private set; }
         public IShoppingCartRepository ShoppingCarts { get; private set; }
+        public IApplicationUserRepository ApplicationUsers { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             ProductCategories = new ProductCategoryRepository(_context);
             Products = new ProductRepository(_context);
             ShoppingCarts = new ShoppingCartRepository(_context);
+            ApplicationUsers = new ApplicationUserRepository(_context);
         }
 
         public void Save()
