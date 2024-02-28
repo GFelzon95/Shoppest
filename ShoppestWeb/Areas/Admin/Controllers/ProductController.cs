@@ -128,6 +128,17 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "The product couldn't be deleted." });
             }
 
+            if (!string.IsNullOrEmpty(productToBeDeleted.PictureUrl))
+            {
+                //delete old picture
+                var oldPicturePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.PictureUrl.TrimStart('\\'));
+
+                if (System.IO.File.Exists(oldPicturePath))
+                {
+                    System.IO.File.Delete(oldPicturePath);
+                }
+            }
+
             _unitOfWork.Products.Remove(productToBeDeleted);
             _unitOfWork.Save();
             TempData["success"] = "Product successfully deleted.";
