@@ -44,5 +44,38 @@ namespace ShoppestWeb.Areas.Customer.Controllers
 
             return View(viewModel);
         }
+
+        public IActionResult Plus(int? id)
+        {
+            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
+            cartInDb.Count++;
+            _unitOfWork.ShoppingCarts.Update(cartInDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Minus(int? id)
+        {
+            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
+            if (cartInDb.Count <= 1)
+            {
+                _unitOfWork.ShoppingCarts.Remove(cartInDb);
+            }
+            else
+            {
+                cartInDb.Count--;
+                _unitOfWork.ShoppingCarts.Update(cartInDb);
+            }
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
+            _unitOfWork.ShoppingCarts.Remove(cartInDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

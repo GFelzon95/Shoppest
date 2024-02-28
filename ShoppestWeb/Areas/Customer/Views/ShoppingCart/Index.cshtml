@@ -31,12 +31,12 @@
                         <div class="col-3 d-flex align-items-center">
                             <div class="d-flex justify-content-end">
                                 <div class="input-group">
-                                    <a class="form-control btn btn-dark d-flex align-items-center"><i class="bi bi-dash-lg"></i></a>
+                                    <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Minus" asp-route-id="@cart.Id" class="form-control btn btn-dark d-flex align-items-center"><i class="bi bi-dash-lg"></i></a>
                                     <span class="input-group-text">@cart.Count</span>
-                                    <a class="form-control btn btn-primary d-flex align-items-center"><i class="bi bi-plus-lg"></i></a>
+                                    <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Plus" asp-route-id="@cart.Id" class="form-control btn btn-primary d-flex align-items-center"><i class="bi bi-plus-lg"></i></a>
                                 </div>
                                 <div class="ms-4">
-                                    <a class="btn btn-danger btn-lg d-flex align-items-center"><i class="bi bi-trash"></i></a>
+                                    <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@cart.Id" class="btn btn-danger btn-lg d-flex align-items-center"><i class="bi bi-trash"></i></a>
                                 </div>
                             </div>
                         </div>
