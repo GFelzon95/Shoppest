@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
 using Shoppest.Models.ViewModels.HomeVM;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Shoppest.Areas.Customer.Controllers
 {
@@ -28,14 +30,67 @@ namespace Shoppest.Areas.Customer.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
             var viewModel = new HomeDetailsVM()
             {
-                Product = _unitOfWork.Products.Get(p => p.Id == id, includeProperties: "ProductCategory")
+                ShoppingCart = new()
+                {
+                    Product = _unitOfWork.Products.Get(p => p.Id == id, includeProperties: "ProductCategory"),
+                    Count = 1,
+                    ProductId = id
+                }
             };
 
+
+
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            var product = _unitOfWork.Products.Get(p => p.Id == shoppingCart.ProductId);
+            var cartFromDb = _unitOfWork.ShoppingCarts.Get(
+                c => c.ProductId == shoppingCart.ProductId
+                && c.ApplicationUserId == shoppingCart.ApplicationUserId);
+
+            if (shoppingCart.Count > product.Quantity)
+            {
+                ModelState.AddModelError("ShoppingCart.Count", "Can't exceed the quantity in stock.");
+            }
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new HomeDetailsVM()
+                {
+                    ShoppingCart = new()
+                    {
+                        Product = _unitOfWork.Products.Get(p => p.Id == shoppingCart.ProductId, includeProperties: "ProductCategory"),
+                        Count = 1,
+                        ProductId = shoppingCart.ProductId
+                    }
+                };
+                return View(viewModel);
+            }
+
+            if (cartFromDb != null)
+            {
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCarts.Update(cartFromDb);
+            }
+            else
+            {
+                _unitOfWork.ShoppingCarts.Add(shoppingCart);
+            }
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

@@ -2,7 +2,6 @@
 {
     public class HomeDetailsVM
     {
-        public Product Product { get; set; }
-        public int Count { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
     }
 }
