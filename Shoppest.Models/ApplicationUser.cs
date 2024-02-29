@@ -10,6 +10,7 @@ namespace Shoppest.Models
 
         public string? StreetAddress { get; set; }
         public string? Barangay { get; set; }
+        public string? City { get; set; }
         public string? Province { get; set; }
         public string? Region { get; set; }
         [MaxLength(5)]

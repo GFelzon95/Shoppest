@@ -102,6 +102,7 @@ namespace ShoppestWeb.Areas.Identity.Pages.Account
             public string? PhoneNumber { get; set; }
             public string? StreetAddress { get; set; }
             public string? Barangay { get; set; }
+            public string? City { get; set; }
             public string? Province { get; set; }
             public string? Region { get; set; }
             [MaxLength(5)]
@@ -147,6 +148,7 @@ namespace ShoppestWeb.Areas.Identity.Pages.Account
                 user.Name = Input.Name;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.StreetAddress = Input.StreetAddress;
+                user.City = Input.City;
                 user.Barangay = Input.Barangay;
                 user.Province = Input.Province;
                 user.Region = Input.Region;

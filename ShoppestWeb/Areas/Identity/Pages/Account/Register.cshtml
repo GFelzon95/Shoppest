@@ -55,6 +55,11 @@
                             <span asp-validation-for="Input.Province" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 col-12 form-floating mb-3">
+                            <input asp-for="Input.City" class="form-control" aria-required="true" placeholder="text" />
+                            <label asp-for="Input.City">City</label>
+                            <span asp-validation-for="Input.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 col-12 form-floating mb-3">
                             <input asp-for="Input.Barangay" class="form-control" aria-required="true" placeholder="text" />
                             <label asp-for="Input.Barangay">Barangay</label>
                             <span asp-validation-for="Input.Barangay" class="text-danger"></span>
@@ -69,7 +74,7 @@
                             <label asp-for="Input.PostalCode">Postal Code</label>
                             <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6 col-12 form-floating mb-3">
+                        <div class="col-12 form-floating mb-3">
                             <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-control">
                                 <option selected disabled>-Select Role-</option>
                             </select>

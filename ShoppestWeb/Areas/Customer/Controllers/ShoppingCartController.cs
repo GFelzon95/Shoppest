@@ -45,6 +45,11 @@ namespace ShoppestWeb.Areas.Customer.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Summary()
+        {
+            return View();
+        }
+
         public IActionResult Plus(int? id)
         {
             var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
