@@ -47,15 +47,47 @@ namespace ShoppestWeb.Areas.Customer.Controllers
 
         public IActionResult Summary()
         {
-            return View();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var applicationUser = _unitOfWork.ApplicationUsers.Get(u => u.Id == userId);
+
+
+
+            var viewModel = new ShoppingCartSummaryVM()
+            {
+                ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(s => s.ApplicationUserId == userId, includeProperties: "Product"),
+            };
+
+            var orderHeader = new OrderHeader()
+            {
+                ApplicationUser = applicationUser,
+
+                Name = applicationUser.Name,
+                PhoneNumber = applicationUser.PhoneNumber,
+                Region = applicationUser.Region,
+                Province = applicationUser.Province,
+                City = applicationUser.City,
+                Barangay = applicationUser.Barangay,
+                StreetAddress = applicationUser.StreetAddress,
+                PostalCode = applicationUser.PostalCode,
+                OrderTotal = GetTotalPrice(viewModel.ShoppingCartList)
+            };
+
+            viewModel.OrderHeader = orderHeader;
+
+            return View(viewModel);
         }
 
         public IActionResult Plus(int? id)
         {
-            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
-            cartInDb.Count++;
-            _unitOfWork.ShoppingCarts.Update(cartInDb);
-            _unitOfWork.Save();
+            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id, includeProperties: "Product");
+            if (cartInDb.Count < cartInDb.Product.Quantity)
+            {
+                cartInDb.Count++;
+                _unitOfWork.ShoppingCarts.Update(cartInDb);
+                _unitOfWork.Save();
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

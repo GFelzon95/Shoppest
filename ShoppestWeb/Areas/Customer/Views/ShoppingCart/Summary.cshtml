@@ -1,4 +1,6 @@
-﻿<div class="card border-0 my-3 shadow">
+﻿@model ShoppingCartSummaryVM
+
+<div class="card border-0 my-3 shadow">
     <div class="card-header bg-primary pt-3 pb-2">
         <div class="row">
             <div class="col-12">
@@ -9,72 +11,81 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="row px-3">
-            <div class="col-7 pe-5">
-                <p class="text-info" style="font-size:30px">Shipping Details</p>
-                <form method="submit">
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Name</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Region</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Province</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">City</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Barangay</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Street Address</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                </form>
-            </div>
-            <div class="col-5">
-                <p class="text-info" style="font-size:30px">Order Summary</p>
-                <div class="card border-0 shadow">
-                    <div class="card-body">
-                 
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="text-primary">Product Name</span>
-                                <span class="text-secondary" style="font-size:15px;display:block">Qty:Count</span>
-                            </div>
-                            <span class="text-secondary" style="font-size:15px">Cart Price</span>
+    <form method="submit">
+        <div class="card-body">
+            <div class="row px-3">
+                <div class="col-7 pe-5">
+                    <p class="text-info" style="font-size:30px">Shipping Details</p>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Name</label>
+                            <input asp-for="OrderHeader.Name" type="text" class="form-control" />
                         </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
+                            <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Region</label>
+                            <input asp-for="OrderHeader.Region" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Province</label>
+                            <input asp-for="OrderHeader.Province" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">City</label>
+                            <input asp-for="OrderHeader.City" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Barangay</label>
+                            <input asp-for="OrderHeader.Barangay" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Street Address</label>
+                            <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
+                            <input asp-for="OrderHeader.PostalCode" type="text" class="form-control" />
+                        </div>
+                
+                </div>
+                <div class="col-5">
+                    <p class="text-info" style="font-size:30px">Order Summary</p>
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
                             
-                        <hr />
-                        <div class="d-flex justify-content-between">
-                            <span class="mb-3 text-primary">Total(USD)</span>
-                            <span class="text-secondary">$$</span>
+                            @foreach(var cart in Model.ShoppingCartList)
+                            {
+                                <div class="d-flex justify-content-between mb-1">
+                                    <div class="d-flex justify-content-start">
+                                        <div class="p-0" style="width:80px; height:50px">
+                                            <img src="@cart.Product.PictureUrl" class="image-center-horizontal" />
+                                        </div>
+                                        <div>
+                                            <span class="text-primary">@cart.Product.Name</span>
+                                            <span class="text-secondary" style="font-size:15px;display:block">Qty:@cart.Count</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-secondary" style="font-size:15px">@cart.Product.Price</span>
+                                </div>
+                            }
+                            
+                            <hr class="mt-2"/>
+                            <div class="d-flex justify-content-between">
+                                <span class="mb-3 text-primary">Total(USD)</span>
+                                <span class="text-secondary">@Model.OrderHeader.OrderTotal.ToString("c")</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card-footer bg-light px-4">
-        <div class="d-flex justify-content-between">
-            <span class="text-info" style="font-size:16px">Estimated Arrival Date:</span>
-            <a class="btn btn-primary w-25">Place Order</a>
+        <div class="card-footer bg-light px-4">
+            <div class="d-flex justify-content-between">
+                <span class="text-info" style="font-size:16px">Estimated Arrival Date:</span>
+                <button type="submit" class="btn btn-primary w-25">Place Order</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
