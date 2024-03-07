@@ -60,9 +60,19 @@ namespace Shoppest.Areas.Customer.Controllers
                 c => c.ProductId == shoppingCart.ProductId
                 && c.ApplicationUserId == shoppingCart.ApplicationUserId);
 
-            if (shoppingCart.Count > product.Quantity)
+            if (cartFromDb == null)
             {
-                ModelState.AddModelError("ShoppingCart.Count", "Can't exceed the quantity in stock.");
+                if (shoppingCart.Count > product.Quantity)
+                {
+                    ModelState.AddModelError("ShoppingCart.Count", "Can't exceed the quantity in stock.");
+                }
+            }
+            else
+            {
+                if (shoppingCart.Count + cartFromDb.Count > product.Quantity)
+                {
+                    ModelState.AddModelError("ShoppingCart.Count", "Can't exceed the quantity in stock.");
+                }
             }
             if (!ModelState.IsValid)
             {
@@ -85,6 +95,7 @@ namespace Shoppest.Areas.Customer.Controllers
             }
             else
             {
+                shoppingCart.Selected = false;
                 _unitOfWork.ShoppingCarts.Add(shoppingCart);
             }
 

@@ -55,7 +55,7 @@ namespace ShoppestWeb.Areas.Customer.Controllers
 
             var viewModel = new ShoppingCartSummaryVM()
             {
-                ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(s => s.ApplicationUserId == userId, includeProperties: "Product"),
+                ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(s => s.ApplicationUserId == userId && s.Selected == true, includeProperties: "Product"),
             };
 
             var orderHeader = new OrderHeader()
@@ -76,6 +76,13 @@ namespace ShoppestWeb.Areas.Customer.Controllers
             viewModel.OrderHeader = orderHeader;
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ActionName("Summary")]
+        public IActionResult SummaryPOST()
+        {
+            throw new NotImplementedException();
         }
 
         public IActionResult Plus(int? id)
@@ -112,6 +119,24 @@ namespace ShoppestWeb.Areas.Customer.Controllers
             var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
             _unitOfWork.ShoppingCarts.Remove(cartInDb);
             _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult SelectProduct(int? id)
+        {
+            var cartInDb = _unitOfWork.ShoppingCarts.Get(c => c.Id == id);
+
+            if (cartInDb.Selected == false)
+            {
+                cartInDb.Selected = true;
+            }
+            else
+            {
+                cartInDb.Selected = false;
+            }
+            _unitOfWork.ShoppingCarts.Update(cartInDb);
+            _unitOfWork.Save();
+
             return RedirectToAction(nameof(Index));
         }
     }

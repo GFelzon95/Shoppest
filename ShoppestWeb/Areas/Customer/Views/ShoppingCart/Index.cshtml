@@ -17,7 +17,7 @@
             {
                 <div class="card border-0 shadow my-2">
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-8">
                             <div class="d-flex justify-content-start">
                                 <div class="container m-0 image-center-vertical-div" style="height:200px; width:200px;">
                                     <img src="@cart.Product.PictureUrl" width="100%"/>
@@ -32,15 +32,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 d-flex align-items-center">
+                        <div class="col-4 d-flex align-items-center">
                             <div class="d-flex justify-content-end">
                                 <div class="input-group">
                                     <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Minus" asp-route-id="@cart.Id" class="form-control btn btn-info d-flex align-items-center"><i class="bi bi-dash-lg"></i></a>
-                                    <span class="input-group-text">@cart.Count</span>
+                                    <span class="input-group-text d-flex justify-content-center" style="width:70px">@cart.Count</span>
                                     <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Plus" asp-route-id="@cart.Id" class="form-control btn btn-primary d-flex align-items-center"><i class="bi bi-plus-lg"></i></a>
                                 </div>
                                 <div class="ms-4">
                                     <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@cart.Id" class="btn btn-danger btn-lg d-flex align-items-center"><i class="bi bi-trash"></i></a>
+                                </div>
+                                <div class="ms-4">
+                                    @if (cart.Selected == false)
+                                    {
+                                        <a class="btn btn-outline-primary d-flex align-items-center" asp-area="Customer" asp-controller="ShoppingCart" asp-action="SelectProduct" asp-route-id="@cart.Id" style="height:100%; width:51px"><i class="bi bi-check2"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-primary d-flex align-items-center" asp-area="Customer" asp-controller="ShoppingCart" asp-action="SelectProduct" asp-route-id="@cart.Id" style="height:100%"><i class="bi bi-check2"></i></a>
+                                    }
                                 </div>
                             </div>
                         </div>
