@@ -17,54 +17,70 @@
             <div class="row px-3">
                 <div class="col-7 pe-5">
                     <p class="text-info" style="font-size:30px">Shipping Details</p>
-                        <div class="input-group mb-3">
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Name</label>
                             <input asp-for="OrderHeader.Name" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
                             <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Region</label>
                             <input asp-for="OrderHeader.Region" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.Region" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.Region" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Province</label>
                             <input asp-for="OrderHeader.Province" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.Province" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.Province" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">City</label>
                             <input asp-for="OrderHeader.City" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Barangay</label>
                             <input asp-for="OrderHeader.Barangay" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.Barangay" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.Barangay" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Street Address</label>
                             <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
                         </div>
-                        <div class="input-group mb-3">
+                        <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
                             <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
                             <input asp-for="OrderHeader.PostalCode" type="text" class="form-control" />
-                            <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
                         </div>
-                
+                        <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
+                    </div>
+
                 </div>
                 <div class="col-5">
                     <p class="text-info" style="font-size:30px">Order Summary</p>
                     <div class="card border-0 shadow">
                         <div class="card-body">
-                            
-                            @foreach(var cart in Model.ShoppingCartList)
+
+                            @foreach (var cart in Model.ShoppingCartList)
                             {
                                 <div class="d-flex justify-content-between mb-1">
                                     <div class="d-flex justify-content-start">
@@ -79,8 +95,8 @@
                                     <span class="text-secondary" style="font-size:15px">@cart.Product.Price</span>
                                 </div>
                             }
-                            
-                            <hr class="mt-2"/>
+
+                            <hr class="mt-2" />
                             <div class="d-flex justify-content-between">
                                 <span class="mb-3 text-primary">Total(USD)</span>
                                 <span class="text-secondary">@Model.OrderHeader.OrderTotal.ToString("c")</span>
