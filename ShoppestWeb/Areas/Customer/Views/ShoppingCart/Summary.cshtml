@@ -1,5 +1,6 @@
 ﻿@model ShoppingCartSummaryVM
 
+
 <div class="card border-0 my-3 shadow">
     <div class="card-header bg-primary pt-3 pb-2">
         <div class="row">
@@ -11,7 +12,7 @@
             </div>
         </div>
     </div>
-    <form method="submit">
+    <form method="post">
         <div class="card-body">
             <div class="row px-3">
                 <div class="col-7 pe-5">
@@ -19,34 +20,42 @@
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Name</label>
                             <input asp-for="OrderHeader.Name" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
                             <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Region</label>
                             <input asp-for="OrderHeader.Region" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.Region" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Province</label>
                             <input asp-for="OrderHeader.Province" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.Province" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">City</label>
                             <input asp-for="OrderHeader.City" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Barangay</label>
                             <input asp-for="OrderHeader.Barangay" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.Barangay" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Street Address</label>
                             <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
                             <input asp-for="OrderHeader.PostalCode" type="text" class="form-control" />
+                            <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
                         </div>
                 
                 </div>

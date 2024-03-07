@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
 using Shoppest.Models.ViewModels.ShoppingCartVM;
+using Shoppest.Utility;
 using System.Security.Claims;
 
 namespace ShoppestWeb.Areas.Customer.Controllers
@@ -40,7 +41,7 @@ namespace ShoppestWeb.Areas.Customer.Controllers
                 ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == userId, includeProperties: "Product")
             };
 
-            viewModel.TotalPrice = GetTotalPrice(viewModel.ShoppingCartList);
+            viewModel.TotalPrice = GetTotalPrice(viewModel.ShoppingCartList.Where(c => c.Selected == true));
 
             return View(viewModel);
         }
@@ -80,7 +81,55 @@ namespace ShoppestWeb.Areas.Customer.Controllers
 
         [HttpPost]
         [ActionName("Summary")]
-        public IActionResult SummaryPOST()
+        public IActionResult SummaryPOST(OrderHeader orderHeader)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var applicationUser = _unitOfWork.ApplicationUsers.Get(u => u.Id == userId);
+            var shoppingCartList = _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == userId && c.Selected == true, includeProperties: "Product");
+
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ShoppingCartSummaryVM()
+                {
+                    ShoppingCartList = shoppingCartList,
+                    OrderHeader = orderHeader
+                };
+
+                return View(viewModel);
+            }
+
+            orderHeader.ApplicationUserId = userId;
+            orderHeader.OrderDate = DateTime.Now;
+            orderHeader.OrderTotal = GetTotalPrice(shoppingCartList);
+
+            orderHeader.OrderStatus = SD.StatusPending;
+            orderHeader.PaymentStatus = SD.PaymentStatusPending;
+
+            _unitOfWork.OrderHeaders.Add(orderHeader);
+            _unitOfWork.Save();
+
+            foreach (var cart in shoppingCartList)
+            {
+                OrderDetail orderDetail = new OrderDetail()
+                {
+                    ProductId = cart.ProductId,
+                    OrderHeaderId = orderHeader.Id,
+                    Count = cart.Count,
+                    Price = cart.Product.Price * cart.Count
+                };
+
+                _unitOfWork.OrderDetails.Add(orderDetail);
+                _unitOfWork.Save();
+            }
+
+            //Stripe logic
+
+
+            return RedirectToAction(nameof(OrderConfirmation));
+        }
+
+        public IActionResult OrderConfirmation()
         {
             throw new NotImplementedException();
         }

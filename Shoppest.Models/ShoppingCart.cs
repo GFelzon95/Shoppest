@@ -18,7 +18,6 @@ namespace Shoppest.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
-
         public bool Selected { get; set; }
     }
 }
