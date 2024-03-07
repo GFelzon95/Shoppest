@@ -41,6 +41,13 @@
     </div>
 </form>
 
+<div class="card border-0 shadow mt-3 py-3 px-4">
+    <h4 class="text-info">Description</h4>
+    <div class="mt-2">
+        @Html.Raw(Model.ShoppingCart.Product.Description)
+    </div>
+</div>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial.cshtml" />
 }

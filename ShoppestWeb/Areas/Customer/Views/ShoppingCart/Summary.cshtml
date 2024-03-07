@@ -108,7 +108,7 @@
         </div>
         <div class="card-footer bg-light px-4">
             <div class="d-flex justify-content-between">
-                <span class="text-info" style="font-size:16px">Estimated Arrival Date:</span>
+                <span class="text-info" style="font-size:16px">Estimated Arrival Date: <span class="text-secondary" style="font-size:14px">@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</span></span>
                 <button type="submit" class="btn btn-primary w-25">Place Order</button>
             </div>
         </div>
