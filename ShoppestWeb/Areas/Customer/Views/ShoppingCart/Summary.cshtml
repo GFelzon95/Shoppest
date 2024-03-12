@@ -1,116 +1,125 @@
 ﻿@model ShoppingCartSummaryVM
 
 
-<div class="card border-0 my-3 shadow">
-    <div class="card-header bg-primary pt-3 pb-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex justify-content-between px-3">
-                    <h4 class="text-light">Summary</h4>
-                    <a class="btn btn-outline-light" asp-action="Index">Back To Cart</a>
+@if (Model.ShoppingCartList.Count() == 0)
+{
+    <div class="text-center">
+        <span class="text-info display-4">Much Emptiness...</span>
+    </div>
+}
+else
+{
+    <div class="card border-0 my-3 shadow">
+        <div class="card-header bg-primary pt-3 pb-2">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between px-3">
+                        <h4 class="text-light">Summary</h4>
+                        <a class="btn btn-outline-light" asp-action="Index">Back To Cart</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <form method="post">
-        <div class="card-body">
-            <div class="row px-3">
-                <div class="col-7 pe-5">
-                    <p class="text-info" style="font-size:30px">Shipping Details</p>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Name</label>
-                            <input asp-for="OrderHeader.Name" type="text" class="form-control" />
+        <form method="post">
+            <div class="card-body">
+                <div class="row px-3">
+                    <div class="col-7 pe-5">
+                        <p class="text-info" style="font-size:30px">Shipping Details</p>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Name</label>
+                                <input asp-for="OrderHeader.Name" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
-                            <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
+                                <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Region</label>
-                            <input asp-for="OrderHeader.Region" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Region</label>
+                                <input asp-for="OrderHeader.Region" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.Region" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.Region" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Province</label>
-                            <input asp-for="OrderHeader.Province" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Province</label>
+                                <input asp-for="OrderHeader.Province" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.Province" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.Province" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">City</label>
-                            <input asp-for="OrderHeader.City" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">City</label>
+                                <input asp-for="OrderHeader.City" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Barangay</label>
-                            <input asp-for="OrderHeader.Barangay" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Barangay</label>
+                                <input asp-for="OrderHeader.Barangay" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.Barangay" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.Barangay" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Street Address</label>
-                            <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Street Address</label>
+                                <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
-                            <input asp-for="OrderHeader.PostalCode" type="text" class="form-control" />
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
+                                <input asp-for="OrderHeader.PostalCode" type="text" class="form-control" />
+                            </div>
+                            <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
-                    </div>
 
-                </div>
-                <div class="col-5">
-                    <p class="text-info" style="font-size:30px">Order Summary</p>
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
+                    </div>
+                    <div class="col-5">
+                        <p class="text-info" style="font-size:30px">Order Summary</p>
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
 
-                            @foreach (var cart in Model.ShoppingCartList)
-                            {
-                                <div class="d-flex justify-content-between mb-1">
-                                    <div class="d-flex justify-content-start">
-                                        <div class="p-0" style="width:80px; height:50px">
-                                            <img src="@cart.Product.PictureUrl" class="image-center-horizontal" />
+                                @foreach (var cart in Model.ShoppingCartList)
+                                {
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <div class="d-flex justify-content-start">
+                                            <div class="p-0" style="width:80px; height:50px">
+                                                <img src="@cart.Product.PictureUrl" class="image-center-horizontal" />
+                                            </div>
+                                            <div>
+                                                <span class="text-primary">@cart.Product.Name</span>
+                                                <span class="text-secondary" style="font-size:15px;display:block">Qty:@cart.Count</span>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <span class="text-primary">@cart.Product.Name</span>
-                                            <span class="text-secondary" style="font-size:15px;display:block">Qty:@cart.Count</span>
-                                        </div>
+                                        <span class="text-secondary" style="font-size:15px">@cart.Product.Price</span>
                                     </div>
-                                    <span class="text-secondary" style="font-size:15px">@cart.Product.Price</span>
-                                </div>
-                            }
+                                }
 
-                            <hr class="mt-2" />
-                            <div class="d-flex justify-content-between">
-                                <span class="mb-3 text-primary">Total(USD)</span>
-                                <span class="text-secondary">@Model.OrderHeader.OrderTotal.ToString("c")</span>
+                                <hr class="mt-2" />
+                                <div class="d-flex justify-content-between">
+                                    <span class="mb-3 text-primary">Total(USD)</span>
+                                    <span class="text-secondary">@Model.OrderHeader.OrderTotal.ToString("c")</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer bg-light px-4">
-            <div class="d-flex justify-content-between">
-                <span class="text-info" style="font-size:16px">Estimated Arrival Date: <span class="text-secondary" style="font-size:14px">@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</span></span>
-                <button type="submit" class="btn btn-primary w-25">Place Order</button>
+            <div class="card-footer bg-light px-4">
+                <div class="d-flex justify-content-between">
+                    <span class="text-info" style="font-size:16px">Estimated Arrival Date: <span class="text-secondary" style="font-size:14px">@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()</span></span>
+                    <button type="submit" class="btn btn-primary w-25">Place Order</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+}
