@@ -4,6 +4,7 @@ using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
 using Shoppest.Models.ViewModels.ShoppingCartVM;
 using Shoppest.Utility;
+using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace ShoppestWeb.Areas.Customer.Controllers
@@ -85,7 +86,7 @@ namespace ShoppestWeb.Areas.Customer.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var applicationUser = _unitOfWork.ApplicationUsers.Get(u => u.Id == userId);
+            //var applicationUser = _unitOfWork.ApplicationUsers.Get(u => u.Id == userId);
             var shoppingCartList = _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == userId && c.Selected == true, includeProperties: "Product");
 
             if (!ModelState.IsValid)
@@ -95,6 +96,8 @@ namespace ShoppestWeb.Areas.Customer.Controllers
                     ShoppingCartList = shoppingCartList,
                     OrderHeader = orderHeader
                 };
+
+                viewModel.OrderHeader.OrderTotal = GetTotalPrice(viewModel.ShoppingCartList);
 
                 return View(viewModel);
             }
@@ -124,14 +127,71 @@ namespace ShoppestWeb.Areas.Customer.Controllers
             }
 
             //Stripe logic
+            var domain = "https://localhost:7180/";
+            var options = new Stripe.Checkout.SessionCreateOptions
+            {
+                SuccessUrl = domain + $"customer/ShoppingCart/orderconfirmation?id={orderHeader.Id}",
+                CancelUrl = domain + "customer/ShoppingCart/index",
+                LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
+                Mode = "payment",
+            };
 
+            foreach (var cart in shoppingCartList)
+            {
+                var sessionLineItem = new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(cart.Product.Price * cart.Count * 100),
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = cart.Product.Name
+                        }
+                    },
+                    Quantity = cart.Count
+                };
+                options.LineItems.Add(sessionLineItem);
+            }
 
-            return RedirectToAction(nameof(OrderConfirmation));
+            var service = new SessionService();
+            Session session = service.Create(options);
+
+            _unitOfWork.OrderHeaders.UpdateStripePaymentID(orderHeader.Id, session.Id, session.PaymentIntentId);
+            _unitOfWork.Save();
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
 
-        public IActionResult OrderConfirmation()
+        public IActionResult OrderConfirmation(int id)
         {
-            return View();
+            var orderHeader = _unitOfWork.OrderHeaders.Get(o => o.Id == id, includeProperties: "ApplicationUser");
+            var service = new SessionService();
+            Session session = service.Get(orderHeader.SessionId);
+
+            if (session.PaymentStatus.ToLower() == "paid")
+            {
+                _unitOfWork.OrderHeaders.UpdateStripePaymentID(orderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.OrderHeaders.UpdateStatus(orderHeader.Id, SD.StatusApproved, SD.PaymentStatusApproved);
+                _unitOfWork.Save();
+            }
+            //Remove Items from Shopping Cart
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCarts
+                .GetAll(c => c.ApplicationUserId == orderHeader.ApplicationUserId && c.Selected == true).ToList();
+
+            _unitOfWork.ShoppingCarts.RemoveRange(shoppingCarts);
+
+            var orderDetails = _unitOfWork.OrderDetails.GetAll(o => o.OrderHeaderId == orderHeader.Id, includeProperties: "Product");
+
+            foreach (var order in orderDetails)
+            {
+                var product = _unitOfWork.Products.Get(p => p.Id == order.ProductId);
+                product.Quantity -= order.Count;
+                _unitOfWork.Products.Update(product);
+            }
+            _unitOfWork.Save();
+
+            return View(id);
         }
 
         public IActionResult Plus(int? id)
