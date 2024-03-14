@@ -131,7 +131,7 @@ namespace ShoppestWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
         public IActionResult Plus(int? id)
