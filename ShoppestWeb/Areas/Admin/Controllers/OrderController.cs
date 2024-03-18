@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
+using Shoppest.Models.ViewModels.OrderVM;
 using Shoppest.Utility;
 using System.Security.Claims;
 
@@ -20,6 +21,18 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize]
+        public IActionResult Details(int id)
+        {
+            var viewModel = new OrderDetailsVM()
+            {
+                OrderHeader = _unitOfWork.OrderHeaders.Get(o => o.Id == id, includeProperties: "ApplicationUser"),
+                OrderDetails = _unitOfWork.OrderDetails.GetAll(o => o.OrderHeaderId == id, includeProperties: "Product")
+            };
+
+            return View(viewModel);
         }
 
         #region API CALLS

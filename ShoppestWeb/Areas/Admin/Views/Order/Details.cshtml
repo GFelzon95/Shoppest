@@ -1,0 +1,131 @@
+﻿@model OrderDetailsVM
+
+<div class="card border-0 shadow mt-2">
+    <div class="card-header bg-primary">
+        <div class="row py-1">
+            <div class="col-6">
+                <div class="text-start ms-2">
+                    <span class="text-light" style="font-size: 20px">Order Details</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="text-end me-2">
+                    <button id="backToOrder" asp-action="Index" class="btn btn-outline-light">Back To Orders</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body pt-2">
+        <form method="post">
+            <div class="row mt-2">
+                <div class="col-6 ps-3 pe-5">
+                    <div class="mb-2">
+                        <span class="text-info" style="font-size:20px">Pick Up Details:</span>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Name</label>
+                        <input asp-for="@Model.OrderHeader.Name" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
+                        <input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Region</label>
+                        <input asp-for="@Model.OrderHeader.Region" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Province</label>
+                        <input asp-for="@Model.OrderHeader.Province" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">City</label>
+                        <input asp-for="@Model.OrderHeader.City" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Barangay</label>
+                        <input asp-for="@Model.OrderHeader.Barangay" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Street Address</label>
+                        <input asp-for="@Model.OrderHeader.StreetAddress" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
+                        <input asp-for="@Model.OrderHeader.PostalCode" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Email</label>
+                        <input asp-for="@Model.OrderHeader.ApplicationUser.Email" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Order Date</label>
+                        <input value="@Model.OrderHeader.OrderDate.ToShortDateString()" class="form-control w-75" readonly />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Carrier</label>
+                        <input asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Tracking</label>
+                        <input asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" />
+                    </div>
+                    @if (Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                    {
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Shipping Date</label>
+                            <input value="@Model.OrderHeader.ShippingDate.ToShortDateString()" class="form-control w-75" />
+                        </div>
+                    }
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Session ID</label>
+                        <input asp-for="@Model.OrderHeader.SessionId" class="form-control w-75" />
+                    </div>
+                    <div class="input-group mb-2">
+                        <label class="input-group-text bg-primary text-light w-25">Payment ID</label>
+                        <input asp-for="@Model.OrderHeader.PaymentIntentId" class="form-control w-75" />
+                    </div>
+                    <button class="btn btn-warning w-100">Edit Pick Up Details</button>
+                </div>
+                <div class="col-6 ps-5 pe-3">
+                    <div class="mb-2">
+                        <span class="text-info" style="font-size: 20px">Order Summary</span>
+                    </div>
+                    <div class="card border-primary w-100 mb-1 p-2">
+                        <span class="text-primary text-center" style="font-size:18px">
+                            Order Status - @Model.OrderHeader.OrderStatus
+                        </span>
+                    </div>
+                    <div class="card mb-2">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span class="text-primary">@item.Product.Name</span><br />
+                                            <span class="text-info">Price: @item.Product.Price.ToString("c")</span><br />
+                                            <span class="text-info">Quantity: @item.Count</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-primary">@item.Price.ToString("c")</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <div class="card-footer bg-primary">
+                            <div class="d-flex justify-content-between p-1">
+                                <h5 class="text-light">Total</h5>
+                                <span class="text-light">@Model.OrderHeader.OrderTotal.ToString("c")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100 mb-2">Start Processing</button>
+                    <button class="btn btn-primary w-100 mb-2">Ship Order</button>
+                    <button class="btn btn-danger w-100 mb-2">Cancel Order</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,3 +13,7 @@
     display: flex;
     align-items: center;
 }
+
+#backToOrder:hover {
+    color: #4582ec;
+}
