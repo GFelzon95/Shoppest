@@ -1,12 +1,32 @@
 ﻿var dataTable;
 
 $(document).ready(function () {
-    loadDataTable();
+    var url = window.location.search;
+
+    switch (true)
+    {
+        case url.includes("pending"):
+            loadDataTable("pending");
+            break;
+        case url.includes("inprocess"):
+            loadDataTable("inprocess");
+            break;
+        case url.includes("completed"):
+            loadDataTable("completed");
+            break;
+        case url.includes("approved"):
+            loadDataTable("approved");
+            break;
+        default:
+            loadDataTable();
+            break;
+
+    }
 })
 
-function loadDataTable() {
+function loadDataTable(status) {
     dataTable = $("#orderTbl").DataTable({
-        "ajax": { url: '/admin/order/getall' },
+        "ajax": { url: '/admin/order/getall?status=' + status },
         "columns": [
             { data: "id", width: "5%" },
             { data: "name", width: "25%" },

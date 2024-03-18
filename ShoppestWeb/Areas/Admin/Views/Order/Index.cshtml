@@ -1,4 +1,31 @@
-﻿
+﻿@{
+    var status = Context.Request.Query["status"];
+    var pending = "btn-outline-primary";
+    var inprocess = "btn-outline-primary";
+    var completed = "btn-outline-primary";
+    var approved = "btn-outline-primary";
+    var all = "btn-outline-primary";
+
+    switch(status)
+    {
+        case "pending":
+            pending = "btn-primary";
+            break;        
+        case "inprocess":
+            inprocess = "btn-primary";
+            break;        
+        case "completed":
+            completed = "btn-primary";
+            break;        
+        case "approved":
+            approved = "btn-primary";
+            break;        
+        default:
+            all = "btn-primary";
+            break;
+    }
+}
+
 <div class="card border-0 shadow">
     <div class="card-header bg-primary">
         <div class="text-center">
@@ -6,6 +33,15 @@
         </div>
     </div>
     <div class="card-body">
+        <div class="d-flex justify-content-end mb-3">
+            <div class="btn-group">
+                <a class="btn @pending" asp-action="Index" asp-route-status="pending">Pending</a>
+                <a class="btn @inprocess" asp-action="Index" asp-route-status="inprocess">In Process</a>
+                <a class="btn @completed" asp-action="Index" asp-route-status="completed">Completed</a>
+                <a class="btn @approved" asp-action="Index" asp-route-status="approved">Approved</a>
+                <a class="btn @all" asp-action="Index">All</a>
+            </div>
+        </div>
         <table id="orderTbl" class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -19,12 +55,11 @@
                 </tr>
             </thead>
             <tbody>
-
             </tbody>
         </table>
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/order.js"></script>
 }

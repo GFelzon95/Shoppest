@@ -39,7 +39,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetAll()
+        public IActionResult GetAll(string status)
         {
             IEnumerable<OrderHeader> orderHeaders;
 
@@ -53,6 +53,24 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                 var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
                 orderHeaders = _unitOfWork.OrderHeaders.GetAll(o => o.ApplicationUserId == userId);
+            }
+
+            switch (status)
+            {
+                case "pending":
+                    orderHeaders = orderHeaders.Where(o => o.OrderStatus == SD.StatusPending);
+                    break;
+                case "inprocess":
+                    orderHeaders = orderHeaders.Where(o => o.OrderStatus == SD.StatusInProcess);
+                    break;
+                case "completed":
+                    orderHeaders = orderHeaders.Where(o => o.OrderStatus == SD.StatusShipped);
+                    break;
+                case "approved":
+                    orderHeaders = orderHeaders.Where(o => o.OrderStatus == SD.StatusApproved);
+                    break;
+                default:
+                    break;
             }
 
             return Json(new { data = orderHeaders });
