@@ -17,7 +17,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();

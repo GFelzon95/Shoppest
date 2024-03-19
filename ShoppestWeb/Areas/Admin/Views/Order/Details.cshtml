@@ -17,59 +17,141 @@
     </div>
     <div class="card-body pt-2">
         <form method="post">
-            <div class="row mt-2">
+            <div class="row m-2">
                 <div class="col-6 ps-3 pe-5">
                     <div class="mb-2">
                         <span class="text-info" style="font-size:20px">Pick Up Details:</span>
                     </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Name</label>
-                        <input asp-for="@Model.OrderHeader.Name" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
-                        <input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Region</label>
-                        <input asp-for="@Model.OrderHeader.Region" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Province</label>
-                        <input asp-for="@Model.OrderHeader.Province" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">City</label>
-                        <input asp-for="@Model.OrderHeader.City" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Barangay</label>
-                        <input asp-for="@Model.OrderHeader.Barangay" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Street Address</label>
-                        <input asp-for="@Model.OrderHeader.StreetAddress" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
-                        <input asp-for="@Model.OrderHeader.PostalCode" class="form-control w-75" />
-                    </div>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Name</label>
+                                <input asp-for="@Model.OrderHeader.Name" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
+                                <input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Region</label>
+                                <input asp-for="@Model.OrderHeader.Region" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.Region" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Province</label>
+                                <input asp-for="@Model.OrderHeader.Province" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.Province" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">City</label>
+                                <input asp-for="@Model.OrderHeader.City" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.City" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Barangay</label>
+                                <input asp-for="@Model.OrderHeader.Barangay" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.Barangay" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Street Address</label>
+                                <input asp-for="@Model.OrderHeader.StreetAddress" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.StreetAddress" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
+                                <input asp-for="@Model.OrderHeader.PostalCode" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.PostalCode" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Name</label>
+                            <input asp-for="@Model.OrderHeader.Name" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Phone Number</label>
+                            <input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Region</label>
+                            <input asp-for="@Model.OrderHeader.Region" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Province</label>
+                            <input asp-for="@Model.OrderHeader.Province" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">City</label>
+                            <input asp-for="@Model.OrderHeader.City" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Barangay</label>
+                            <input asp-for="@Model.OrderHeader.Barangay" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Street Address</label>
+                            <input asp-for="@Model.OrderHeader.StreetAddress" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Postal Code</label>
+                            <input asp-for="@Model.OrderHeader.PostalCode" class="form-control w-75" readonly />
+                        </div>
+                    }
                     <div class="input-group mb-2">
                         <label class="input-group-text bg-primary text-light w-25">Email</label>
-                        <input asp-for="@Model.OrderHeader.ApplicationUser.Email" class="form-control w-75" />
+                        <input asp-for="@Model.OrderHeader.ApplicationUser.Email" class="form-control w-75" readonly />
                     </div>
                     <div class="input-group mb-2">
                         <label class="input-group-text bg-primary text-light w-25">Order Date</label>
                         <input value="@Model.OrderHeader.OrderDate.ToShortDateString()" class="form-control w-75" readonly />
                     </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Carrier</label>
-                        <input asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Tracking</label>
-                        <input asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" />
-                    </div>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Carrier</label>
+                                <input asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.Carrier" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="input-group">
+                                <label class="input-group-text bg-primary text-light w-25">Tracking</label>
+                                <input asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" />
+                            </div>
+                            <span asp-validation-for="@Model.OrderHeader.TrackingNumber" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Carrier</label>
+                            <input asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Tracking</label>
+                            <input asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" readonly />
+                        </div>
+                    }
                     @if (Model.OrderHeader.OrderStatus == SD.StatusShipped)
                     {
                         <div class="input-group mb-2">
@@ -77,15 +159,21 @@
                             <input value="@Model.OrderHeader.ShippingDate.ToShortDateString()" class="form-control w-75" />
                         </div>
                     }
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Session ID</label>
-                        <input asp-for="@Model.OrderHeader.SessionId" class="form-control w-75" />
-                    </div>
-                    <div class="input-group mb-2">
-                        <label class="input-group-text bg-primary text-light w-25">Payment ID</label>
-                        <input asp-for="@Model.OrderHeader.PaymentIntentId" class="form-control w-75" />
-                    </div>
-                    <button class="btn btn-warning w-100">Edit Pick Up Details</button>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Session ID</label>
+                            <input asp-for="@Model.OrderHeader.SessionId" class="form-control w-75" readonly />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text bg-primary text-light w-25">Payment ID</label>
+                            <input asp-for="@Model.OrderHeader.PaymentIntentId" class="form-control w-75" readonly />
+                        </div>
+                    }
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <button class="btn btn-warning w-100">Edit Pick Up Details</button>
+                    }
                 </div>
                 <div class="col-6 ps-5 pe-3">
                     <div class="mb-2">
@@ -121,9 +209,24 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary w-100 mb-2">Start Processing</button>
-                    <button class="btn btn-primary w-100 mb-2">Ship Order</button>
-                    <button class="btn btn-danger w-100 mb-2">Cancel Order</button>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
+                        {
+                            <button class="btn btn-primary w-100 mb-2">Start Processing</button>
+                        }
+                        @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
+                        {
+                            <button class="btn btn-primary w-100 mb-2">Ship Order</button>
+                        }
+                        @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
+                        Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
+                        Model.OrderHeader.OrderStatus != SD.StatusShipped)
+                        {
+                            <button class="btn btn-danger w-100 mb-2">Cancel Order</button>
+                        }
+                    }
+
                 </div>
             </div>
         </form>
