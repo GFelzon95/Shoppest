@@ -35,6 +35,34 @@ namespace ShoppestWeb.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult UpdateOrderDetail(OrderDetailsVM orderDetailsVM)
+        {
+            var orderFromDb = _unitOfWork.OrderHeaders.Get(o => o.Id == orderDetailsVM.OrderHeader.Id, includeProperties: "ApplicationUser");
+            orderFromDb.Name = orderDetailsVM.OrderHeader.Name;
+            orderFromDb.PhoneNumber = orderDetailsVM.OrderHeader.PhoneNumber;
+            orderFromDb.Region = orderDetailsVM.OrderHeader.Region;
+            orderFromDb.Province = orderDetailsVM.OrderHeader.Province;
+            orderFromDb.City = orderDetailsVM.OrderHeader.City;
+            orderFromDb.Barangay = orderDetailsVM.OrderHeader.Barangay;
+            orderFromDb.StreetAddress = orderDetailsVM.OrderHeader.StreetAddress;
+            orderFromDb.PostalCode = orderDetailsVM.OrderHeader.PostalCode;
+            if (!string.IsNullOrEmpty(orderDetailsVM.OrderHeader.Carrier))
+            {
+                orderFromDb.Carrier = orderDetailsVM.OrderHeader.Carrier;
+            }
+            if (!string.IsNullOrEmpty(orderDetailsVM.OrderHeader.TrackingNumber))
+            {
+                orderFromDb.TrackingNumber = orderDetailsVM.OrderHeader.TrackingNumber;
+            }
+
+            _unitOfWork.OrderHeaders.Update(orderFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Details), new { id = orderDetailsVM.OrderHeader.Id });
+        }
+
+
         #region API CALLS
 
         [HttpGet]

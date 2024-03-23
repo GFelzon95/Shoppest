@@ -10,13 +10,14 @@
             </div>
             <div class="col-6">
                 <div class="text-end me-2">
-                    <button id="backToOrder" asp-action="Index" class="btn btn-outline-light">Back To Orders</button>
+                    <a id="backToOrder" asp-action="Index" class="btn btn-outline-light">Back To Orders</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-body pt-2">
         <form method="post">
+            <input asp-for="@Model.OrderHeader.Id" hidden />
             <div class="row m-2">
                 <div class="col-6 ps-3 pe-5">
                     <div class="mb-2">
@@ -172,7 +173,7 @@
                     }
                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                     {
-                        <button class="btn btn-warning w-100">Edit Pick Up Details</button>
+                        <button asp-action="UpdateOrderDetail" class="btn btn-warning w-100">Edit Pick Up Details</button>
                     }
                 </div>
                 <div class="col-6 ps-5 pe-3">
