@@ -63,6 +63,16 @@ namespace ShoppestWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new { id = orderDetailsVM.OrderHeader.Id });
         }
 
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult ProcessOrder(int id)
+        {
+            var orderHeader = _unitOfWork.OrderHeaders.Get(o => o.Id == id);
+            _unitOfWork.OrderHeaders.UpdateStatus(orderHeader.Id, SD.StatusInProcess);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Details), new { id = orderHeader.Id });
+        }
+
 
         #region API CALLS
 

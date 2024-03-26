@@ -212,9 +212,9 @@
                     </div>
                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                     {
-                        @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
+                        @if (Model.OrderHeader.OrderStatus == SD.StatusApproved && Model.OrderHeader.PaymentStatus == SD.PaymentStatusApproved)
                         {
-                            <button class="btn btn-primary w-100 mb-2">Start Processing</button>
+                            <button asp-action="ProcessOrder" type="submit" class="btn btn-primary w-100 mb-2" asp-route-id="@Model.OrderHeader.Id">Start Processing</button>
                         }
                         @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                         {
