@@ -4,6 +4,7 @@ using Shoppest.DataAccess.Repository.IRepository;
 using Shoppest.Models;
 using Shoppest.Models.ViewModels.OrderVM;
 using Shoppest.Utility;
+using Stripe;
 using System.Security.Claims;
 
 namespace ShoppestWeb.Areas.Admin.Controllers
@@ -102,6 +103,35 @@ namespace ShoppestWeb.Areas.Admin.Controllers
             }
 
             return Json(new { data = orderHeaders });
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public IActionResult CancelOrder(int id)
+        {
+            var orderHeader = _unitOfWork.OrderHeaders.Get(o => o.Id == id);
+
+            if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+            {
+                var options = new RefundCreateOptions
+                {
+                    Reason = RefundReasons.RequestedByCustomer,
+                    PaymentIntent = orderHeader.PaymentIntentId
+                };
+
+                var service = new RefundService();
+                Refund refund = service.Create(options);
+
+                _unitOfWork.OrderHeaders.UpdateStatus(id, SD.StatusCancelled, SD.StatusRefunded);
+            }
+            else
+            {
+                _unitOfWork.OrderHeaders.UpdateStatus(id, SD.StatusCancelled, SD.StatusCancelled);
+
+            }
+            _unitOfWork.Save();
+            TempData["success"] = "Order Cancelled Successfully.";
+            return Json(new { success = true });
         }
 
         #endregion
