@@ -130,14 +130,14 @@
                         <div class="mb-2">
                             <div class="input-group">
                                 <label class="input-group-text bg-primary text-light w-25">Carrier</label>
-                                <input asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" />
+                                <input id="carrier" asp-for="@Model.OrderHeader.Carrier" class="form-control w-75" />
                             </div>
                             <span asp-validation-for="@Model.OrderHeader.Carrier" class="text-danger"></span>
                         </div>
                         <div class="mb-2">
                             <div class="input-group">
                                 <label class="input-group-text bg-primary text-light w-25">Tracking</label>
-                                <input asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" />
+                                <input id="trackingNumber" asp-for="@Model.OrderHeader.TrackingNumber" class="form-control w-75" />
                             </div>
                             <span asp-validation-for="@Model.OrderHeader.TrackingNumber" class="text-danger"></span>
                         </div>
@@ -218,7 +218,7 @@
                         }
                         @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                         {
-                            <button class="btn btn-primary w-100 mb-2">Ship Order</button>
+                            <button asp-action="ShipOrder" type="submit" onclick="return validateCarrier()" class="btn btn-primary w-100 mb-2" asp-route-id="@Model.OrderHeader.Id">Ship Order</button>
                         }
                     }
                     @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
@@ -236,6 +236,8 @@
 </div>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         function cancelOrder(id) {
             Swal.fire({
@@ -259,6 +261,26 @@
                     }
 
                 })
+        }
+
+        function validateCarrier() {
+            if (document.getElementById("trackingNumber").value == "") {
+                Swal.fire({
+                    title: "Error..",
+                    text: "Tracking Number field can't be empty.",
+                    icon: "error",
+                });
+                return false;
+            } 
+            if (document.getElementById("carrier").value == "") {
+                Swal.fire({
+                    title: "Error..",
+                    text: "Carrier field can't be empty.",
+                    icon: "error",
+                });
+                return false;
+            }
+            return true;
         }
     </script>
 }

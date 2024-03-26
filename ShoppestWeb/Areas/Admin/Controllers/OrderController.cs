@@ -73,6 +73,22 @@ namespace ShoppestWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new { id = orderHeader.Id });
         }
 
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult ShipOrder(OrderHeader orderHeader)
+        {
+            var orderHeaderFromDb = _unitOfWork.OrderHeaders.Get(o => o.Id == orderHeader.Id);
+            orderHeaderFromDb.TrackingNumber = orderHeader.TrackingNumber;
+            orderHeaderFromDb.Carrier = orderHeader.Carrier;
+            orderHeaderFromDb.OrderStatus = SD.StatusShipped;
+            orderHeaderFromDb.ShippingDate = DateTime.Now;
+
+            _unitOfWork.OrderHeaders.Update(orderHeaderFromDb);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Details), new { id = orderHeader.Id });
+        }
+
 
         #region API CALLS
 
