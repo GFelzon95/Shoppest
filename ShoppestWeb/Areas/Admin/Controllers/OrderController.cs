@@ -136,6 +136,7 @@ namespace ShoppestWeb.Areas.Admin.Controllers
         public IActionResult CancelOrder(int id)
         {
             var orderHeader = _unitOfWork.OrderHeaders.Get(o => o.Id == id);
+            var orderDetails = _unitOfWork.OrderDetails.GetAll(o => o.OrderHeader.Id == orderHeader.Id, includeProperties: "Product");
 
             if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
             {
@@ -149,15 +150,24 @@ namespace ShoppestWeb.Areas.Admin.Controllers
                 Refund refund = service.Create(options);
 
                 _unitOfWork.OrderHeaders.UpdateStatus(id, SD.StatusCancelled, SD.StatusRefunded);
+
+                foreach (var item in orderDetails)
+                {
+                    var product = _unitOfWork.Products.Get(p => p.Id == item.ProductId);
+                    product.Quantity += item.Count;
+                    _unitOfWork.Products.Update(product);
+                }
             }
             else
             {
                 _unitOfWork.OrderHeaders.UpdateStatus(id, SD.StatusCancelled, SD.StatusCancelled);
 
             }
+
             _unitOfWork.Save();
             TempData["success"] = "Order Cancelled Successfully.";
             return Json(new { success = true });
+
         }
 
         #endregion
